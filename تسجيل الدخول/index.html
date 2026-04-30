@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - Care Route</title>
+    <link rel="stylesheet" href="./staly.css">
+    <link rel="icon" type="image/png" href="../الوكو بس.png">
+</head>
+<body>
+
+<div class="full-background">
+        <img src="/img/الوجو خلفيه.png" alt="Background"> 
+    </div>
+
+    <div class="page-overlay">
+        
+        <img src="./img/الوكو بس.png" alt="" class="top-left-icon">
+
+        <div class="main-wrapper">
+            <header class="auth-header">
+                <img src="./img/الوجو مع الاسم.png" alt="Care Route" class="brand-logo">
+                <h1 class="main-tagline">تسجيل الدخول أسرع طريقك لرعاية / Sign In to Your Fastest Path to Care</h1>
+            </header>
+
+            <main class="login-card">
+                <h2 class="card-title">تسجيل الدخول</h2>
+                
+                <form id="authForm">
+                    <div class="input-field">
+                        <label>اسم المستخدم أو الإيميل</label>
+                        <div class="input-box">
+                            <img src="./img/لوجو الانسان لتسجيل الدخول .png" class="field-icon"> 
+                            <input type="text" id="emailInput" placeholder="Username or Email">
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label>كلمة المرور</label>
+                        <div class="input-box">
+                            <img src="./img/لوجو المفتاح كلمت السر.png" class="field-icon"> 
+                            <input type="password" id="passwordInput" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <a href="#" class="forgot-pass">هل نسيت كلمة المرور؟</a>
+                    <button type="submit" class="login-submit-btn" id="mainBtn">تسجيل الدخول</button>
+                </form>
+
+                <div class="social-auth">
+                    <p class="social-label">تسجيل الدخول عبر وسائل التواصل</p>
+                    <div class="social-icons-row">
+                        <div class="social-item google-btn">
+                            <img src="./img/جوجل مفرغ.webp" alt="Google">
+                            <span>Google</span>
+                            <small>تسجيل باستخدام كذا</small>
+                        </div>
+                        <div class="social-item facebook-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
+                            <span>Facebook</span>
+                            <small>تسجيل باستخدام كذا</small>
+                        </div>
+                        <div class="social-item apple-btn">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+                            <span>Apple</span>
+                            <small>تسجيل باستخدام كذا</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    ليس لديك حساب؟ <a href="../انشاء حساب/signup.html">قم بإنشاء حساب جديد</a>
+                    <p>Don't have an account? <strong>Sign up</strong></p>
+                </div>
+            </main>
+        </div>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
