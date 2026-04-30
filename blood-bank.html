@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARE ROUTE - بنك الدم</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="blood-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-actions">
+        <div class="profile-pic">
+            <img src="../Generated Image September 08, 2025 - 5_17PM.jpg" alt="User"> </div>
+        <div class="notification">
+            <i class="far fa-bell"></i> <span class="dot"></span>
+            <link rel="icon" type="image/png" href="../الوكو بس.png">
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="../الصفحه الرايسيه التانيه/index.html" class="active">الرئيسية</a>
+        <a href="../المستشفي/hospitals.html">المستشفيات</a>
+        <a href="../طوارء/index.html">طوارئ</a>
+        <a href="../المحفطة/wallet.html">المحفظة</a>
+        <a href="../شات طبي/chat.html">شات طبي</a>
+        <a href="../بنك الدم/blood-bank.html">بنك الدم</a>
+    </div>
+
+    <div class="logo">
+        <img src="./img/الوجو مع الاسم.png" alt="logo">
+    </div>
+</nav>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <main class="blood-bank-container">
+        <h2 class="page-title">بنك الدم</h2>
+        
+        <div class="blood-bank-content">
+            <div class="map-section">
+                <div id="map"></div>
+            </div>
+
+            <div class="actions-section">
+                
+                <div class="main-card">
+                    <div class="donate-now-box">
+                        <img src="blood-drop.png" alt="" class="blood-icon">
+                        <h1>تبرع بالدم الآن</h1>
+                        <p>أنقذ حياة</p>
+                    </div>
+
+                    <div class="urgent-grid">
+                        <button class="btn-box blue" id="searchDonors">ابحث عن متبرعين</button>
+                        <button class="btn-box light" id="urgentRequest">طلب دم عاجل</button>
+                    </div>
+                </div>
+
+                <div class="services-feed">
+                    <h3>خدمات بنك الدم والأنشطة القريبة</h3>
+                    
+                    <div class="feed-item clickable" id="activeDonation">
+                        <div class="item-info">
+                            <span class="main-txt">طلب تبرع نشط (مستشفى الشفاء)</span>
+                            <span class="sub-txt">الآن - 2024</span>
+                        </div>
+                        <span class="item-icon red">🩸</span>
+                    </div>
+
+                    <div class="feed-item clickable" id="nearestBlood">
+                        <div class="item-info">
+                            <span class="main-txt">أقرب بنك دم: المركز الإقليمي</span>
+                        </div>
+                        <span class="item-icon blue">📍</span>
+                    </div>
+
+                    <div class="feed-item clickable" id="nearbyCampaign">
+                        <div class="item-info">
+                            <span class="main-txt">حملة تبرع قريبة (وسط المدينة)</span>
+                        </div>
+                        <span class="item-icon green">✅</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="blood-script.js"></script>
+</body>
+</html>

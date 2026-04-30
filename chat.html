@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARE ROUTE - ذكاء اصطناعي طبي</title>
+    <link rel="stylesheet" href="chat-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../الوكو بس.png">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-actions">
+        <div class="profile-pic">
+            <img src="../Generated Image September 08, 2025 - 5_17PM.jpg" alt="User"> </div>
+        <div class="notification">
+            <i class="far fa-bell"></i> <span class="dot"></span>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="../الصفحه الرايسيه التانيه/index.html" class="active">الرئيسية</a>
+        <a href="../المستشفي/hospitals.html">المستشفيات</a>
+        <a href="../طوارء/index.html">طوارئ</a>
+        <a href="../المحفطة/wallet.html">المحفظة</a>
+        <a href="../شات طبي/chat.html">شات طبي</a>
+        <a href="../بنك الدم/blood-bank.html">بنك الدم</a>
+    </div>
+
+    <div class="logo">
+        <img src="./img/الوجو مع الاسم.png" alt="logo">
+    </div>
+</nav>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <main class="chat-container">
+        
+        <aside class="medical-summary">
+            <div class="summary-card">
+                <h3>ملخص السجل الطبي</h3>
+                <p class="patient-id">ID: 00027313739</p>
+                
+                <div class="summary-box">
+                    <p>ملخص الحالات الحالية: H3 - 2C - H3</p>
+                    <p>فصيلة الدم المتوفرة: A+ - 99 mg/gL</p>
+                </div>
+
+                <div class="history-list">
+                    <h4>قائمة الزيارات السابقة</h4>
+                    <ul>
+                        <li><span>2024-2024</span> طبيب ذكاء اصطناعي</li>
+                        <li><span>2024-2024</span> استشارة طوارئ</li>
+                    </ul>
+                </div>
+
+                <div class="reports-section">
+                    <h4>التحاليل والأشعة حديثة</h4>
+                    <button class="report-btn">📄 تقرير تحاليل حديثة</button>
+                    <button class="report-btn">📄 تقرير تحاليل حديثة</button>
+                </div>
+            </div>
+        </aside>
+
+        <section class="chat-window">
+            <header class="chat-header">
+                <div class="ai-info">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="status-wrapper">
+                        <h2>طبيبك (الذكاء الاصطناعي)</h2>
+                        <span class="online-status">متصل الآن</span>
+                    </div>
+                </div>
+                <button class="menu-dots">⋮</button>
+            </header>
+
+            <div class="messages-area" id="chatbox">
+                <div class="ai-msg">مرحباً بك في CARE ROUTE. أنا طبيبك الافتراضي، كيف يمكنني مساعدتك اليوم؟</div>
+            </div>
+
+            <footer class="chat-input-area">
+                <div class="input-wrapper">
+                    <button class="icon-btn">📷</button>
+                    <button class="icon-btn">🎤</button>
+                    <button class="icon-btn">📎</button>
+                    <input type="text" id="userInput" placeholder="اكتب رسالتك هنا...">
+                </div>
+                <button class="send-btn" onclick="sendMessage()">إرسال</button>
+            </footer>
+        </section>
+
+    </main>
+
+    <script src="chat-ai.js"></script>
+</body>
+</html>

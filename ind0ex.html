@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تطبيق الرعاية الصحية - CARE ROUTE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-family:'Cairo',sans-serif; background:#eef2f7; direction:rtl; }
+body { min-height:100vh; }
+
+/* ===== NAV (التعديل الجديد للون والروابط) ===== */
+nav {
+  background:#1e2f54; /* اللون الداكن الجديد */
+  padding:15px 40px;
+  display:flex; align-items:center; justify-content:center;
+  position:sticky; top:0; z-index:300;
+}
+.nav-links { display:flex; gap:35px; list-style:none; align-items:center; }
+.nav-links a { 
+    text-decoration:none; color:#fff; 
+    font-weight:700; font-size:18px; 
+    transition: opacity 0.2s; 
+}
+.nav-links a:hover, .nav-links a.active { opacity: 0.8; }
+
+/* ===== CARD الأساسي ===== */
+.card {
+  background:#fff; border-radius:18px;
+  box-shadow:0 3px 14px rgba(0,0,0,0.07);
+  padding:18px; display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.card-title {
+  font-size:17px; font-weight:900; color:#111;
+  margin-bottom:14px; display:flex; align-items:center; gap:8px;
+}
+
+/* ===== DESKTOP GRID ===== */
+@media(min-width:701px){
+  .layout {
+    display:grid;
+    grid-template-columns:1fr 1.5fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:16px;
+    padding:18px 24px;
+    height:calc(100vh - 62px);
+    min-height:600px;
+  }
+  .card-hospital { grid-column:1; grid-row:1; }
+  .card-map     { grid-column:2; grid-row:1/3; }
+  .card-emergency { grid-column:3; grid-row:1; }
+  .card-blood   { grid-column:1; grid-row:2; }
+  .card-wallet  { grid-column:3; grid-row:2; }
+}
+
+/* ===== MOBILE STACK ===== */
+@media(max-width:700px){
+  .layout { display:flex; flex-direction:column; gap:14px; padding:14px; }
+  .card-map { order:1; }
+  .card-emergency { order:2; }
+  .card-hospital { order:3; }
+  .card-blood { order:4; }
+  .card-wallet { order:5; }
+}
+
+/* ===== MAP ===== */
+#map { width:100%; height: 100%; min-height: 250px; border-radius: 18px; }
+
+/* ===== EMERGENCY ===== */
+.btn-danger-big {
+    background: #e53935; color: #fff; border: none; border-radius: 15px;
+    padding: 35px 15px; font-family: 'Cairo', sans-serif; font-size: 28px;
+    font-weight: 900; cursor: pointer; box-shadow: 0 6px 0 #b71c1c;
+    transition: all 0.2s; margin-bottom: 15px; width: 100%;
+}
+.btn-danger-big:active { transform: translateY(4px); box-shadow: 0 2px 0 #b71c1c; }
+.btn-ambulance-main {
+    background: #fff; color: #333; border: 2px solid #ddd; border-radius: 15px;
+    padding: 12px; width: 100%; font-family: 'Cairo', sans-serif;
+    font-size: 18px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+}
+.countdown-box {
+  display:none; margin-top:12px; background:#fff8e1; border:2px solid #ffc107;
+  border-radius:11px; padding:12px; text-align:center;
+}
+.countdown-box.on { display:block; }
+.arrived-box {
+  display:none; margin-top:12px; background:#e8f5e9; border:2px solid #4caf50;
+  border-radius:11px; padding:12px; text-align:center;
+  font-weight:800; color:#2e7d32;
+}
+.arrived-box.on { display:block; }
+
+/* ===== BLOOD BANK (التعديل المكبر) ===== */
+.blood-content-box {
+    background: #f4f7ff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.blood-type-large {
+    font-size: 56px;
+    font-weight: 900;
+    color: #c62828;
+    display: block;
+    margin-bottom: 5px;
+}
+.blood-info-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #444;
+}
+.btn-donate-link {
+    background: #2b6cb0;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+/* ===== WALLET (التعديل الجديد للمحفظة) ===== */
+.wallet-display {
+    background: #f4f7ff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.wallet-amount { font-size: 48px; font-weight: 900; color: #1a1a1a; display: block; }
+.balance-label { font-size: 20px; color: #666; font-weight: 600; display: block; }
+.btn-blue { 
+    background: #2b6cb0; 
+    color: #fff; 
+    border: none; 
+    border-radius: 50px; 
+    padding: 15px; 
+    width: 100%; 
+    font-family: 'Cairo', sans-serif; 
+    font-size: 22px; 
+    font-weight: 800; 
+    cursor: pointer; 
+}
+
+/* ===== HOSPITAL LIST ===== */
+.hospital-item { border: 1px solid #f0f0f0; padding: 10px; border-radius: 12px; margin-bottom: 8px; }
+.hosp-name { font-size:14px; font-weight:800; color:#1a73e8; display: block; }
+.btn-direction { width: 100%; padding: 6px; background: #1a2f54; color: #fff; border: none; border-radius: 8px; font-family: 'Cairo'; font-weight: 700; cursor: pointer; margin-top: 5px; font-size: 12px; }
+
+/* ===== MODALS & SNACK ===== */
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:500; align-items:center; justify-content:center; }
+.overlay.on { display:flex; }
+.modal { background:#fff; border-radius:18px; padding:26px; width:380px; max-width:94vw; }
+#snack { display:none; position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:#212121; color:#fff; padding:11px 22px; border-radius:28px; z-index:600; font-size:13px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <ul class="nav-links">
+    <li><a href="#" class="active">الرئيسية</a></li>
+    <li><a href="#">المستشفيات</a></li>
+    <li><a href="#">طوارئ</a></li>
+    <li><a href="#">المحفظة</a></li>
+    <li><a href="#">بنك الدم</a></li>
+    <li><a href="#">شات الطبي</a></li>
+    <li><a href="#">تسجيل الدخول</a></li>
+  </ul>
+</nav>
+
+<div class="layout">
+  <div class="card card-hospital">
+    <div class="card-title">🏥 المستشفيات القريبة</div>
+    <div id="hospital-list">جاري البحث...</div>
+  </div>
+
+  <div class="card card-map">
+    <div id="map"></div>
+  </div>
+
+  <div class="card card-emergency">
+    <div class="card-title">🚨 الطوارئ</div>
+    <button class="btn-danger-big" id="danger-btn" onclick="triggerDanger()">أنا في خطر</button>
+    <button class="btn-ambulance-main" id="amb-btn" onclick="requestAmbulance()">طلب إسعاف</button>
+    
+    <div class="countdown-box" id="countdown-box">
+      <div style="font-size:13px; color:#666;">الإسعاف في طريقه إليك</div>
+      <div id="countdown-num" style="font-size:30px; font-weight:900; color:#f57c00;">08:00</div>
+    </div>
+    <div class="arrived-box" id="arrived-box">🚑 الإسعاف وصل إليك!</div>
+  </div>
+
+  <div class="card card-blood">
+    <div class="card-title">🩸 بنك الدم</div>
+    <div class="blood-content-box">
+        <span class="blood-type-large">نقص O-</span>
+        <span class="blood-info-text">فصيلة A+ متاحة</span>
+    </div>
+    <a href="#" class="btn-donate-link">تبرع</a>
+  </div>
+
+  <div class="card card-wallet">
+    <div class="card-title">💳 محفظتي</div>
+    <div class="wallet-display">
+        <span class="wallet-amount" id="wallet-num">5000 EGP</span>
+        <span class="balance-label">Balance</span>
+    </div>
+    <button class="btn-blue" onclick="openModal('wallet-modal')">إضافة أموال</button>
+  </div>
+</div>
+
+<div class="overlay" id="wallet-modal">
+  <div class="modal">
+    <h3>💳 إضافة أموال</h3>
+    <input type="number" id="amount-input" style="width:100%; padding:10px; margin:15px 0;" placeholder="المبلغ">
+    <button class="btn-blue" onclick="addMoney()">إضافة</button>
+    <button onclick="closeModal('wallet-modal')" style="background:none; border:none; cursor:pointer; width:100%; margin-top:10px;">إلغاء</button>
+  </div>
+</div>
+
+<div id="snack"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// الكود البرمجي لم يتغير لضمان استقرار الوظائف
+let map, ambRequested=false, countdownInterval=null, balance=5000;
+
+function snack(msg){
+  const el=document.getElementById('snack');
+  el.textContent=msg; el.style.display='block';
+  setTimeout(()=>el.style.display='none',3000);
+}
+
+function openModal(id){document.getElementById(id).classList.add('on');}
+function closeModal(id){document.getElementById(id).classList.remove('on');}
+
+function triggerDanger() {
+    document.getElementById('danger-btn').style.background = '#b71c1c';
+    snack('🚨 تم إرسال نداء استغاثة!');
+    if (!ambRequested) requestAmbulance();
+}
+
+function requestAmbulance() {
+    if (ambRequested) { cancelAmbulance(); return; }
+    ambRequested = true;
+    const btn = document.getElementById('amb-btn');
+    btn.textContent = '❌ إلغاء الطلب';
+    btn.style.background = '#fce4ec';
+    btn.style.color = '#c62828';
+    document.getElementById('countdown-box').classList.add('on');
+    startTimer(8 * 60);
+}
+
+function cancelAmbulance() {
+    ambRequested = false;
+    clearInterval(countdownInterval);
+    const btn = document.getElementById('amb-btn');
+    btn.textContent = 'طلب إسعاف';
+    btn.style.background = '#fff';
+    btn.style.color = '#333';
+    document.getElementById('countdown-box').classList.remove('on');
+    document.getElementById('arrived-box').classList.remove('on');
+    document.getElementById('danger-btn').style.background = '#e53935';
+}
+
+function startTimer(duration) {
+    let timer = duration, m, s;
+    countdownInterval = setInterval(() => {
+        m = parseInt(timer / 60, 10);
+        s = parseInt(timer % 60, 10);
+        document.getElementById('countdown-num').textContent = `${m}:${s < 10 ? '0' + s : s}`;
+        if (--timer < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown-box').classList.remove('on');
+            document.getElementById('arrived-box').classList.add('on');
+        }
+    }, 1000);
+}
+
+function addMoney(){
+    const v=parseFloat(document.getElementById('amount-input').value);
+    if(v>0){ balance+=v; document.getElementById('wallet-num').textContent=`${balance} EGP`; closeModal('wallet-modal'); snack('✅ تم الشحن'); }
+}
+
+if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(p=>{
+        const lat=p.coords.latitude, lng=p.coords.longitude;
+        map = L.map('map').setView([lat, lng], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.marker([lat, lng]).addTo(map).bindPopup('موقعك').openPopup();
+        
+        const hospitals = [
+            {name: "مستشفى السلام الدولي", l:[lat+0.005, lng+0.005]},
+            {name: "مستشفى الحياة", l:[lat-0.005, lng+0.008]}
+        ];
+        
+        const list = document.getElementById('hospital-list');
+        list.innerHTML = '';
+        hospitals.forEach(h => {
+            L.marker(h.l).addTo(map).bindPopup(h.name);
+            list.innerHTML += `
+                <div class="hospital-item">
+                    <span class="hosp-name">${h.name}</span>
+                    <button class="btn-direction" onclick="window.open('https://www.google.com/maps?q=${h.l[0]},${h.l[1]}')">🧭 اتجاه الآن</button>
+                </div>`;
+        });
+    }, ()=> snack('يرجى تفعيل الموقع'));
+}
+</script>
+</body>
+</html>

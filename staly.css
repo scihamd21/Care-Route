@@ -1,0 +1,191 @@
+:root {
+    --bg-blue: #f4e9d7;
+    --card-beige: #f4e9d7;
+    --dark-blue: #0b2149;
+    --light-blue-btn: #add8e6;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    /* --- الكود الجديد هنا --- */
+    background-image: url('background.jpg'); /* اسم الصورة بتاعتك */
+    background-size: cover; /* تجعل الصورة تغطي الشاشة بالكامل دون تكرار */
+    background-position: center; /* تمركز الصورة في منتصف الشاشة */
+    background-repeat: no-repeat; /* تمنع تكرار الصورة */
+    background-attachment: fixed; /* تجعل الخلفية ثابتة أثناء التمرير (إختياري) */
+    /* ------------------------ */
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* الأيقونة اللي فوق عالشمال */
+.top-left-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    opacity: 0.8;
+}
+
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    z-index: 2;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brand-logo {
+    width: 350px;
+    margin-bottom: 15px;
+   
+}
+
+.main-tagline {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* تصميم الكارت البيج */
+.login-card {
+    background-color: var(--card-beige);
+    width: 420px;
+    padding: 35px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.card-title {
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 30px;
+}
+
+.input-field {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.input-field label {
+    font-size: 13px;
+    color: #555;
+    margin-right: 5px;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin-top: 5px;
+}
+
+.input-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    background: transparent;
+}
+
+.field-icon { width: 18px; margin-left: 10px; opacity: 0.5; }
+
+.forgot-pass {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    color: #0056b3;
+    text-decoration: none;
+    margin: 10px 0 25px 0;
+}
+
+.login-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--light-blue-btn);
+    border: none;
+    border-radius: 12px;
+    color: var(--dark-blue);
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-submit-btn:hover { background-color: #92c9db; }
+
+/* السوشيال ميديا */
+.social-auth { margin-top: 30px; }
+.social-label { font-size: 14px; color: #666; margin-bottom: 15px; }
+
+.social-icons-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.social-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.social-item img { width: 32px; height: 32px; margin-bottom: 5px; }
+.social-item span { font-size: 12px; font-weight: bold; }
+.social-item small { font-size: 9px; color: #888; }
+
+.card-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    font-size: 14px;
+}
+
+.card-footer a { color: #0056b3; text-decoration: none; font-weight: bold; }
+
+
+/* تنسيق صورة الخلفية لتكون خلف كل شيء */
+.full-background {
+    position: fixed;
+    top: 0;
+    right: 100px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* يخليها خلف المحتوى */
+        transform: scale(2); /* تكبير 150% */
+
+}
+
+.full-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* يضمن إن الصورة متتمطش وتملى الشاشة صح */
+}
+
+/* تأكد إن الـ page-overlay ملهوش خلفية سادة عشان الصورة تبان */
+.page-overlay {
+    background-color: rgba(255, 255, 255, 0.1); /* تفتيح خفيف جداً */
+    width: 100%;
+    min-height: 100vh;
+}

@@ -1,0 +1,431 @@
+/* ===== المتغيرات ===== */
+:root {
+  --dark-blue: #0b2149;
+  --card-beige: #f5eed8;
+  --radio-check: #abd4f0;
+  --input-bg: #ffffff;
+  --border-color: #dddddd;
+  --text-dark: #1a1a2e;
+  --text-muted: #555555;
+  --text-light: #888888;
+  --font: 'Cairo', sans-serif;
+}
+
+/* ===== ريست عام ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== body ===== */
+body {
+  font-family: var(--font);
+  background: #f4e9d7;
+  min-height: 100vh;
+  direction: rtl;
+}
+
+/* ===== خلفية SVG ديكورية ===== */
+.bg-decor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Wrapper الرئيسي ===== */
+.wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 12px 40px;
+  min-height: 100vh;
+}
+
+/* ===== اللوجو ===== */
+.logo-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.logo-top svg {
+  width: 54px;
+  height: 40px;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.logo-c {
+  color: #e8dfc8;
+}
+
+.logo-route {
+  color: #1a5ea8;
+}
+
+/* ===== الكارت الرئيسي ===== */
+.card {
+  background: var(--card-beige);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 500px;
+  padding: 24px 26px 22px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+/* ===== منطقة الصورة الشخصية ===== */
+.pic-area {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.pic-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px dashed #b0a880;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #b0a880;
+  background: #fdf9ef;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.pic-circle:hover {
+  border-color: var(--dark-blue);
+  color: var(--dark-blue);
+}
+
+.pic-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.pic-circle.has-img .plus-icon {
+  display: none;
+}
+
+.plus-icon {
+  position: absolute;
+  font-size: 26px;
+}
+
+#fileInput {
+  display: none;
+}
+
+.pic-label {
+  font-size: 11px;
+  color: var(--text-light);
+  display: block;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.remove-btn {
+  display: none;
+  margin-top: 4px;
+  font-size: 10px;
+  color: #c0392b;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font);
+}
+
+.remove-btn.show {
+  display: inline-block;
+}
+
+/* ===== شبكة الحقول ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* ===== حقل إدخال واحد ===== */
+.field label {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 7px 10px;
+  gap: 8px;
+  transition: border-color 0.2s;
+}
+
+.input-box:focus-within {
+  border-color: var(--dark-blue);
+}
+
+.input-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+  font-family: var(--font);
+  text-align: right;
+  background: transparent;
+  color: #333;
+  direction: rtl;
+}
+
+.input-box input::placeholder {
+  color: #bbb;
+  font-size: 12px;
+}
+
+.iicon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+/* ===== قسم الأسئلة الطبية ===== */
+.medical {
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding-top: 13px;
+  margin-bottom: 14px;
+}
+
+.medical-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark-blue);
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+.q-label {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 6px;
+  text-align: right;
+}
+
+/* ===== راديو بوتونز ===== */
+.radio-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.radio-opt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #333;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  user-select: none;
+}
+
+.radio-opt.active {
+  background: var(--dark-blue);
+  color: #fff;
+  border-color: var(--dark-blue);
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.radio-opt.active .check-icon {
+  background: var(--radio-check);
+}
+
+.check-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dark-blue);
+}
+
+/* ===== تكست إيريا الأمراض ===== */
+textarea.diseases {
+  width: 100%;
+  height: 58px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  resize: none;
+  font-family: var(--font);
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--input-bg);
+  direction: rtl;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+textarea.diseases:focus {
+  border-color: var(--dark-blue);
+}
+
+textarea.diseases::placeholder {
+  color: #bbb;
+}
+
+/* ===== زرار إنشاء الحساب ===== */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--dark-blue);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.submit-btn:hover {
+  background: #153c7c;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== قسم السوشيال ===== */
+.social-section {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.social-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.s-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #555;
+}
+
+.s-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.2s;
+}
+
+.s-icon-circle:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== فوتر الكارت ===== */
+.footer-card {
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding-top: 12px;
+  font-size: 12px;
+  color: #444;
+}
+
+.footer-card a {
+  color: #0056b3;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-card a:hover {
+  text-decoration: underline;
+}
+
+.footer-card p {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #888;
+}
+
+/* ===== فوتر الصفحة ===== */
+.page-footer {
+  margin-top: 18px;
+  font-size: 11px;
+  color: #666;
+  display: flex;
+  gap: 16px;
+}
+
+.page-footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  text-decoration: underline;
+}
